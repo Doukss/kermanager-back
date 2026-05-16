@@ -1,6 +1,7 @@
 package com.immo.agency.entity;
 import jakarta.persistence.*;
 import lombok.*;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 @Entity @Table(name = "agencies")
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
@@ -14,4 +15,5 @@ public class Agency {
     private String email;
     private String plan; // STARTER, PRO, ENTERPRISE
     private boolean active = true;
+    private OffsetDateTime createdAt;
 }

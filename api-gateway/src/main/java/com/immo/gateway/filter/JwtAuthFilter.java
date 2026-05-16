@@ -17,7 +17,7 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String path = exchange.getRequest().getPath().value();
-        if (path.startsWith("/auth/")) return chain.filter(exchange);
+        if (path.equals("/auth/login") || path.equals("/auth/refresh")) return chain.filter(exchange);
         String header = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if (header == null || !header.startsWith(BEARER)) {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);

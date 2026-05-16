@@ -1,0 +1,10 @@
+package com.immo.dispute.repository;
+
+import com.immo.dispute.entity.Dispute;
+import com.immo.dispute.entity.enums.DisputeStatus;
+import java.util.UUID;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface DisputeRepository extends JpaRepository<Dispute, UUID> {
+    long countByStatut(DisputeStatus statut);
+}

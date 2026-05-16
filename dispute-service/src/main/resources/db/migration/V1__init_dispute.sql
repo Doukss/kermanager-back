@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 CREATE TABLE disputes (
     id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     tenant_id   VARCHAR(100) NOT NULL,
@@ -13,4 +15,4 @@ CREATE TABLE disputes (
 CREATE INDEX idx_disputes_tenant  ON disputes(tenant_id);
 CREATE INDEX idx_disputes_statut  ON disputes(statut);
 ALTER TABLE disputes ENABLE ROW LEVEL SECURITY;
-CREATE POLICY tenant_isolation ON disputes USING (tenant_id = current_setting('app.tenant_id', true));
+CREATE POLICY tenant_isolation ON disputes USING (current_setting('app.tenant_id', true) IS NULL OR tenant_id = current_setting('app.tenant_id', true));

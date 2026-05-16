@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 CREATE TABLE payments (
     id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     tenant_id      VARCHAR(100) NOT NULL,
@@ -13,4 +15,4 @@ CREATE INDEX idx_payments_tenant   ON payments(tenant_id);
 CREATE INDEX idx_payments_contract ON payments(contract_id);
 CREATE INDEX idx_payments_statut   ON payments(statut);
 ALTER TABLE payments ENABLE ROW LEVEL SECURITY;
-CREATE POLICY tenant_isolation ON payments USING (tenant_id = current_setting('app.tenant_id', true));
+CREATE POLICY tenant_isolation ON payments USING (current_setting('app.tenant_id', true) IS NULL OR tenant_id = current_setting('app.tenant_id', true));
